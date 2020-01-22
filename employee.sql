@@ -91,6 +91,5 @@ as (
 )
 select DeptName, count(EmpID) as 'Total Employees'
 from DeptEmployees
-where DeptName = 'Marketing'
 group by DeptName;
 
