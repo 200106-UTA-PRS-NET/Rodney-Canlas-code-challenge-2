@@ -80,4 +80,17 @@ from DeptEmployees
 join EmpDetails
 on EmpID = EmployeeID
 where DeptName = 'Marketing'
-group by DeptName
+group by DeptName;
+
+with DeptEmployees (DeptName, EmpID, EmployeeName)
+as (
+	select Name, EmployeeID, FirstName
+	from Department
+	join Employee
+	on DepartmentID = DeptID
+)
+select DeptName, count(EmpID) as 'Total Employees'
+from DeptEmployees
+where DeptName = 'Marketing'
+group by DeptName;
+
