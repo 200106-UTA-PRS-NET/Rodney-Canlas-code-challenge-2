@@ -40,17 +40,22 @@ insert into Department (Name, Location)
 
 insert into Employee (FirstName, LastName, SSN, DeptID)
 	values ('Tina', 'Smith', 123456789, 1),
-		('John', 'Doe', 987654321, 3),
-		('Jose', 'Bautista', 222444666, 2)
+		('John', 'Doe', 987654321, 3)
+
+insert into Employee (FirstName, LastName, SSN, DeptID)
+	values ('Jose', 'Bautista', 222444666, 2),
+		('Alexis', 'Grant', 888888888, 1),
+		('Bob', 'Hope', 777777777, 1)
 
 insert into EmpDetails(EmployeeID, Salary)
 	values (1, 5000),
 		(2, 5000),
 		(3, 5000)
 
-select * from Department;
-select * from Employee;
-select * from EmpDetails;
+insert into EmpDetails(EmployeeID, Salary)
+	values (4, 5000),
+		(5, 5000),
+		(6, 5000)
 
 select * from Employee
 where Employee.DeptID = 1;
@@ -59,7 +64,20 @@ update EmpDetails
 set Salary = 90000
 where EmpDetails.EmployeeID = 1;
 
-select *
-from Department
-join Employee
-on DepartmentID = DeptID
+select * from Department;
+select * from Employee;
+select * from EmpDetails;
+
+with DeptEmployees (DeptName, EmpID, EmployeeName)
+as (
+	select Name, EmployeeID, FirstName
+	from Department
+	join Employee
+	on DepartmentID = DeptID
+)
+select DeptName, sum(Salary) as 'Total Salary' 
+from DeptEmployees
+join EmpDetails
+on EmpID = EmployeeID
+where DeptName = 'Marketing'
+group by DeptName
